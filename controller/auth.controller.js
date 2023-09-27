@@ -6,6 +6,7 @@ const authController = {
   register: async (req, res) => {
     try {
       const { email, password, name } = req.body;
+      console.log(req.body);
       const [user, fieldsUser] = await pool.query(
         "select * from users where email = ?",
         [email]
@@ -23,7 +24,7 @@ const authController = {
         return res.json({ error: "Error" });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       res.json({
         error: error.message,
       });

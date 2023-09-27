@@ -3,6 +3,16 @@ const app = express();
 
 require("dotenv").config();
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  next();
+});
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -26,7 +36,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/rooms", roomRouter);
 app.use("/api/v1/messages", messageRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log("Server is running....");
