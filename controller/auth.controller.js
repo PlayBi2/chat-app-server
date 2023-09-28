@@ -36,22 +36,23 @@ const authController = {
       const [user] = await pool.query("select * from users where email = ?", [
         email,
       ]);
+      // console.log(user[0])
       if (!user[0]) return res.json({ error: "Invalid email!" });
 
-      const { password: hash, id, name } = user[0];
-
+      const { password: hash, idUser, name, role } = user[0];
       const check = await bcrypt.compare(password, hash);
 
       if (check) {
-        const accessToken = jwt.sign({ userId: id }, "3812932sjad34&*@", {
+        const accessToken = jwt.sign({ userId: idUser }, "3812932sjad34&*@", {
           expiresIn: "1h",
         });
         return res.json({
           accessToken,
           data: {
-            userId: id,
+            userId: idUser,
             name,
             email,
+            role,
           },
         });
       }
