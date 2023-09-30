@@ -6,7 +6,6 @@ const authController = {
   register: async (req, res) => {
     try {
       const { email, password, name } = req.body;
-      console.log(req.body);
       const [user, fieldsUser] = await pool.query(
         "select * from users where email = ?",
         [email]
@@ -52,6 +51,7 @@ const authController = {
             userId: idUser,
             name,
             email,
+            password,
             role,
           },
         });
